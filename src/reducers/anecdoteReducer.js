@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit'
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -43,6 +45,8 @@ const anecdoteReducer = (state = initialState, action) => {
       return state
   }
 }
+
+const noteSlice = 
 
 export const voteAnecdote = (id) => {
   console.log('Creating the action vote... ')
