@@ -12,6 +12,7 @@ const AnecdoteForm = () => {
     event.target.anecdote.value = ''
     dispatch(createAnecdote(content))
   }
+  
   return(
     <form onSubmit={newAnecdote}>
       <div><input name='anecdote'/></div>

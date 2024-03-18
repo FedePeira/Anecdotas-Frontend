@@ -3,14 +3,23 @@ import { useSelector, useDispatch } from 'react-redux'
 import { voteAnecdote } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state)
+  const [filterContent, setFilterContent] = useState('');
+  const { anecdotes, filter } = useSelector(state => ({
+    anecdotes: state.anecdotes,
+    filter: state.filter
+  }))  
   const dispatch = useDispatch()
 
-  const [filterContent, setFilterContent] = useState('');
-
-  const filteredAnecdotes = anecdotes.filter(anecdote =>
-     anecdote.content.toLowerCase().includes(filterContent.toLowerCase())
-  );
+  const filteredAnecdotes = () => {
+    console.log('Initializing anecdotes by order of: ', filter)
+    console.log('------------------------')    
+    if(filter === 'CONTENT') {
+        return anecdotes.filter(anecdote =>
+        anecdote.content.toLowerCase().includes(filterContent.toLowerCase()));
+      } else {
+        return anecdotes.sort((a, b) => b.votes - a.votes)
+      }
+  }
   
   const vote = (id) => {
     console.log('Voting...', id)
@@ -20,14 +29,15 @@ const AnecdoteList = () => {
 
   return(
     <div>
+      {filter === 'CONTENT' ? 
       <input
         type="text"
         placeholder="Search anecdotes..."
         value={filterContent}
         onChange={(event) => setFilterContent(event.target.value)}
-      />
+        /> : null }
       <ul>
-      {filteredAnecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+      {filteredAnecdotes().map(anecdote =>
         <div key={anecdote.id}>
             <div>
             {anecdote.content}
