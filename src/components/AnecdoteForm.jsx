@@ -10,9 +10,9 @@ const AnecdoteForm = () => {
     console.log('------------------------')
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    dispatch(createAnecdote(content))
+    dispatch(createAnecdote({ content }))
   }
-  
+
   return(
     <form onSubmit={newAnecdote}>
       <div><input name='anecdote'/></div>

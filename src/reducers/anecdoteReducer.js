@@ -21,6 +21,7 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
+/*
 const anecdoteReducer = (state = initialState, action) => {
   console.log('Anecdote Reducer -->')
   console.log('State Anecdote now: ', state)
@@ -45,29 +46,35 @@ const anecdoteReducer = (state = initialState, action) => {
       return state
   }
 }
+*/
 
-const noteSlice = 
-
-export const voteAnecdote = (id) => {
-  console.log('Creating the action vote... ')
-  console.log('---------------------')
-  return {
-    type: 'VOTE',
-    payload: { id }
-  }
-}
-
-export const createAnecdote = (content) => {
-  console.log('Creating the action create... ')
-  console.log('---------------------')
-  return {
-    type: 'NEW_NOTE',
-    payload: { 
-      content,
-      votes: 0,
-      id: getId()
+const noteSlice = createSlice({
+  name: 'anecdotes',
+  initialState,
+  reducers: {
+    voteAnecdote(state, action){
+      console.log('Creating the action vote... ')
+      console.log('---------------------')
+      const id = action.payload.id
+      const noteToChange = state.find(n => n.id === id)
+      const changedNote = { 
+        ...noteToChange, 
+        votes: noteToChange.votes + 1
+      }
+      return  state.map(note =>
+        note.id !== id ? note : changedNote 
+      ) 
+    },
+    createAnecdote(state, action){
+      console.log('Creating the action create... ')
+      console.log('---------------------')
+      const newNote = action.payload
+      newNote.votes = 0 
+      newNote.id = getId()
+      return state.concat(newNote)
     }
   }
-}
+})
 
-export default anecdoteReducer
+export const { createAnecdote, voteAnecdote } = noteSlice.actions
+export default noteSlice.reducer

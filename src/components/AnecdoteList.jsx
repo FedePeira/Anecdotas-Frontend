@@ -17,14 +17,14 @@ const AnecdoteList = () => {
         return anecdotes.filter(anecdote =>
         anecdote.content.toLowerCase().includes(filterContent.toLowerCase()));
       } else {
-        return anecdotes.sort((a, b) => b.votes - a.votes)
+        return anecdotes.slice().sort((a, b) => b.votes - a.votes)
       }
   }
   
   const vote = (id) => {
     console.log('Voting...', id)
     console.log('------------------------')
-    dispatch(voteAnecdote(id))
+    dispatch(voteAnecdote({ id }    ))
   }
 
   return(
