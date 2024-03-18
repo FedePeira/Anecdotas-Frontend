@@ -21,8 +21,8 @@ const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
   console.log('Reducer -->')
-  console.log('State now --> ', state)
-  console.log('Action -->', action)
+  console.log('State now: ', state)
+  console.log('Action:', action)
   console.log('---------------------')
   switch(action.type) {
     case 'VOTE': { 
@@ -35,19 +35,34 @@ const reducer = (state = initialState, action) => {
       return  state.map(note =>
         note.id !== id ? note : changedNote 
       ) 
-    } 
+    }
+    case 'NEW_NOTE': {
+      return state.concat(action.payload)
+    }
     default:
       return state
   }
 }
 
-
 export const voteAnecdote = (id) => {
-  console.log('Creating the action --> ')
+  console.log('Creating the action... ')
   console.log('---------------------')
   return {
     type: 'VOTE',
     payload: { id }
+  }
+}
+
+export const createAnecdote = (content) => {
+  console.log('Creating the action... ')
+  console.log('---------------------')
+  return {
+    type: 'NEW_NOTE',
+    payload: { 
+      content,
+      votes: 0,
+      id: getId()
+    }
   }
 }
 
