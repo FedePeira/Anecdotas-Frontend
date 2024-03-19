@@ -24,7 +24,7 @@ const AnecdoteList = () => {
   const vote = (id) => {
     console.log('Voting...', id)
     console.log('------------------------')
-    dispatch(voteAnecdote({ id }    ))
+    dispatch(voteAnecdote({ id }))
   }
 
   return(
