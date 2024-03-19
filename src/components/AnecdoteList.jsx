@@ -38,7 +38,7 @@ const AnecdoteList = () => {
         /> : null }
       <ul>
       {filteredAnecdotes().map(anecdote =>
-        <div key={anecdote.id}>
+        <div key={anecdote.id} className='anecdote'>
             <div>
             {anecdote.content}
             </div>
